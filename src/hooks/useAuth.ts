@@ -7,6 +7,12 @@ export type User = {
   lastName: string;
   email: string;
   role: 'admin' | 'editor' | 'concierge';
+  plan: {
+    name: string;
+    iaSearchQuota: number;
+    suggestionQuota: number;
+    users: number;
+  };
 };
 
 export const useAuth = () => {

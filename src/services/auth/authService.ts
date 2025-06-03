@@ -19,6 +19,12 @@ export interface User {
   firstName: string;
   lastName: string;
   role: 'admin' | 'editor' | 'concierge';
+  plan: {
+    name: string;
+    iaSearchQuota: number;
+    suggestionQuota: number;
+    users: number;
+  };
   isVerified: boolean;
   twoFactorEnabled: boolean;
   securityPreferences: SecurityPreferences;
@@ -68,6 +74,7 @@ class AuthService {
         firstName: 'John',
         lastName: 'Doe',
         role: 'admin',
+        plan: { name: 'Discovery', iaSearchQuota: 2, suggestionQuota: 0, users: 1 },
         isVerified: true,
         twoFactorEnabled: false,
         securityPreferences: {
@@ -103,6 +110,7 @@ class AuthService {
         firstName,
         lastName,
         role: 'concierge',
+        plan: { name: 'Discovery', iaSearchQuota: 2, suggestionQuota: 0, users: 1 },
         isVerified: false,
         twoFactorEnabled: false,
         securityPreferences: {
