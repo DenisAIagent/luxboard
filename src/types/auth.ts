@@ -4,6 +4,12 @@ export type User = {
   firstName: string;
   lastName: string;
   role: 'admin' | 'editor' | 'concierge';
+  plan: {
+    name: string;
+    iaSearchQuota: number;
+    suggestionQuota: number;
+    users: number;
+  };
   isVerified: boolean;
   twoFactorEnabled: boolean;
   securityPreferences: SecurityPreferences;
