@@ -1,0 +1,242 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  createdProviders Provider[] @relation("CreatedBy")
+  validatedProviders Provider[] @relation("ValidatedBy")
+  
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  USER
+}
+
+model Provider {
+  id          String   @id @default(cuid())
+  nom         String
+  category    Category
+  description String?
+  
+  // Adresse
+  adresseRue        String?
+  adresseCodePostal String?
+  adresseVille      String?
+  adressePays       String? @default("France")
+  latitude          Float?
+  longitude         Float?
+  
+  // Contact
+  contactTelephone      String?
+  contactEmail          String?
+  contactSiteWeb        String?
+  contactPersonne       String?
+  
+  // Tarifs
+  tarifMinimum Float?
+  tarifMaximum Float?
+  tarifUnite   TarifUnit? @default(PERSONNE)
+  tarifDevise  String?    @default("EUR")
+  
+  // Métadonnées
+  photos            String[]
+  horaires          Json?
+  specialites       String[]
+  capaciteMax       Int?
+  rating            Float?   @default(0)
+  nombreAvis        Int?     @default(0)
+  statusValidation  ValidationStatus @default(EN_ATTENTE)
+  
+  // Relations
+  createdBy   User   @relation("CreatedBy", fields: [createdById], references: [id])
+  createdById String
+  validatedBy   User?   @relation("ValidatedBy", fields: [validatedById], references: [id])
+  validatedById String?
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  offers Offer[]
+  events Event[]
+  
+  // API Data
+  googlePlaceId String?
+  lastSyncAt    DateTime?
+  
+  @@map("providers")
+}
+
+enum Category {
+  RESTAURANT
+  HOTEL
+  SPA
+  TRANSPORT
+  SERVICES
+  ARTISAN
+  SECURITE
+  EVENEMENTIEL
+  PLOMBIER
+  ELECTRICIEN
+  MENAGE
+  JARDINAGE
+  GARDE_ENFANTS
+  TRAITEUR
+  FLEURISTE
+  PHOTOGRAPHE
+  MUSICIEN
+  BIJOUTERIE
+  ART
+}
+
+enum TarifUnit {
+  PERSONNE
+  HEURE
+  PRESTATION
+  JOUR
+}
+
+enum ValidationStatus {
+  EN_ATTENTE
+  APPROUVE
+  REJETE
+}
+
+model Offer {
+  id          String @id @default(cuid())
+  titre       String
+  description String?
+  typeOffre   OfferType
+  
+  // Valeur de l'offre
+  valeurType    ValueType
+  valeurMontant Float?
+  codePromo     String?
+  
+  // Validité
+  dateDebut     DateTime
+  dateFin       DateTime
+  joursValides  String[]
+  heuresValides String?
+  
+  // Conditions
+  conditions String[]
+  
+  // Utilisation
+  nombreUtilisations   Int @default(0)
+  limiteUtilisations   Int?
+  statusActif          Boolean @default(true)
+  
+  // Relation
+  provider   Provider @relation(fields: [providerId], references: [id])
+  providerId String
+  
+  // Métadonnées
+  photos    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("offers")
+}
+
+enum OfferType {
+  REDUCTION
+  UPGRADE
+  ACCES_EXCLUSIF
+  INVITATION
+}
+
+enum ValueType {
+  POURCENTAGE
+  MONTANT_FIXE
+  GRATUIT
+}
+
+model Event {
+  id          String @id @default(cuid())
+  titre       String
+  description String?
+  typeEvent   EventType
+  
+  // Organisateur
+  organisateurNom     String
+  organisateurContact String?
+  organisateurTel     String?
+  
+  // Lieu
+  lieuNom     String
+  lieuAdresse String
+  
+  // Dates multiples
+  dates EventDate[]
+  
+  // Tarifs
+  invitationSeule Boolean @default(true)
+  prixParPersonne Float?  @default(0)
+  inclus          String[]
+  
+  // Accès
+  codeAcces        String?
+  dressCode        String?
+  langues          String[]
+  niveauExclusivite ExclusivityLevel @default(STANDARD)
+  
+  // Métadonnées
+  photos       String[]
+  statusActif  Boolean @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Relations
+  provider   Provider? @relation(fields: [providerId], references: [id])
+  providerId String?
+  
+  @@map("events")
+}
+
+model EventDate {
+  id                String   @id @default(cuid())
+  date              DateTime
+  heureDebut        String
+  heureFin          String
+  placesDisponibles Int
+  placesReservees   Int      @default(0)
+  
+  event   Event  @relation(fields: [eventId], references: [id])
+  eventId String
+  
+  @@map("event_dates")
+}
+
+enum EventType {
+  GALA
+  VERNISSAGE
+  DEGUSTATION
+  CONFERENCE
+  SPECTACLE
+  VENTE_PRIVEE
+}
+
+enum ExclusivityLevel {
+  STANDARD
+  PREMIUM
+  ULTRA_PREMIUM
+} 

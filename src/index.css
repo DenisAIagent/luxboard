@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './styles/global.css';
+@import './styles/effects.css';
+
+@layer utilities {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--dark-luxury);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary-gold);
+    border-radius: 4px;
+  }
+} 

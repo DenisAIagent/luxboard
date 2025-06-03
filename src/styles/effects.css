@@ -1,0 +1,65 @@
+@layer utilities {
+  .luxe-card {
+    @apply bg-white rounded-xl shadow-luxe transition-all duration-300 hover:shadow-luxe-hover;
+  }
+
+  .luxe-button {
+    @apply bg-luxboard-noir text-luxboard-blanc px-6 py-3 rounded-lg 
+           transition-all duration-300 ease-luxe
+           hover:bg-luxboard-gris hover:shadow-luxe-gold
+           focus:ring-2 focus:ring-luxboard-or focus:ring-offset-2;
+  }
+
+  .luxe-input {
+    @apply bg-white border border-gray-200 rounded-lg px-4 py-2
+           transition-all duration-300 ease-luxe
+           focus:border-luxboard-or focus:ring-2 focus:ring-luxboard-or focus:ring-offset-2
+           hover:border-luxboard-gris;
+  }
+
+  .luxe-glass {
+    @apply bg-white/80 backdrop-blur-luxe border border-white/20
+           shadow-luxe rounded-xl;
+  }
+
+  .luxe-hover {
+    @apply transition-all duration-300 ease-luxe
+           hover:scale-[1.02] hover:shadow-luxe-hover;
+  }
+
+  .luxe-text {
+    @apply font-playfair text-luxboard-gris;
+  }
+
+  .luxe-gradient {
+    @apply bg-gradient-to-r from-luxboard-noir via-luxboard-gris to-luxboard-noir;
+  }
+
+  .luxe-border {
+    @apply border border-luxboard-or/20 rounded-xl;
+  }
+
+  .luxe-animate-in {
+    @apply animate-fade-in animate-scale;
+  }
+
+  .luxe-animate-up {
+    @apply animate-slide-up;
+  }
+
+  .luxe-animate-down {
+    @apply animate-slide-down;
+  }
+
+  .luxe-animate-left {
+    @apply animate-slide-left;
+  }
+
+  .luxe-animate-right {
+    @apply animate-slide-right;
+  }
+
+  .luxe-float {
+    @apply animate-float;
+  }
+} 

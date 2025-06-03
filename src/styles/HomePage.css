@@ -1,0 +1,81 @@
+.home-page {
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  color: var(--white-pearl);
+  background: var(--dark-luxury);
+  overflow-x: hidden;
+}
+
+/* Variables globales */
+:root {
+  --primary-gold: #D4AF37;
+  --dark-luxury: #0A0A0A;
+  --white-pearl: #FEFEFE;
+  --gray-elegant: #2A2A2A;
+  --accent-gold: #F4E8C1;
+  --shadow-luxury: rgba(212, 175, 55, 0.3);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-luxury);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-gold);
+  border-radius: 4px;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 3rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stats {
+    justify-content: center;
+  }
+} 
